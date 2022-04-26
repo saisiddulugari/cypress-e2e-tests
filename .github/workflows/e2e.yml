@@ -1,21 +1,16 @@
-# .github/workflows/e2e.yml
-# test the deployed Netlify site
-name: e2e
+name: Repository Dispatch
 on:
-  workflow_dispatch:
-    inputs:
-      siteName:
-        description: Netlify Site Name
-        required: false
-      deployPrimeUrl:
-        description: Deployed URL
-        required: true
-        default: 'https://todomvc-no-tests.netlify.app/'
-      commit:
-        description: Original repo commit SHA
-        required: false
+  repository_dispatch:
+    types: [my-event]
 jobs:
-  # example job showing the Netlify information
+  myEvent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.client_payload.ref }}
+      - run: echo ${{ github.event.client_payload.sha }}
+
   show-event:
     runs-on: ubuntu-20.04
     steps:
