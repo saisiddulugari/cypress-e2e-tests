@@ -8,13 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: echo ${{ github.event.client_payload.sha }}
-
-  show-event:
-    runs-on: ubuntu-20.04
-    steps:
-      - run: echo "Testing url ${{ github.event.inputs.deployPrimeUrl }}"
-      - run: echo "Site name ${{ github.event.inputs.siteName }}"
-      - run: echo "App commit SHA ${{ github.event.client_payload.sha }}"
+      - run: echo ${{ github.event.client_payload.sai }}
+      
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -30,16 +25,40 @@ jobs:
         continue-on-error: true
         with:
           # we want to test the URL passed by Netlify
-          config: baseUrl=${{ github.event.inputs.deployPrimeUrl }}
+          config: baseUrl=${{ github.event.client_payload.sai }}
+
+
+#   show-event:
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - run: echo "Testing url ${{ github.event.inputs.deployPrimeUrl }}"
+#       - run: echo "Site name ${{ github.event.inputs.siteName }}"
+#       - run: echo "App commit SHA ${{ github.event.client_payload.sha }}"
+#       - name: Checkout
+#         uses: actions/checkout@v2
+
+#       # https://github.com/cypress-io/github-action
+#       # Installs and caches dependencies, runs all Cypress tests
+#       - name: Cypress run
+#         uses: cypress-io/github-action@v2
+#         # let's give this action an ID so we can refer
+#         # to its output values later
+#         id: cypress
+#         # Continue the build in case of an error, as we need to set the
+#         # commit status in the next step, both in case of success and failure
+#         continue-on-error: true
+#         with:
+#           # we want to test the URL passed by Netlify
+#           config: baseUrl=${{ github.event.inputs.deployPrimeUrl }}
           
-      - name: Set commit status
-        if: ${{ github.event.inputs.commit }}
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          # create personal GitHub token to be able to
-          # set status in other repositories
-          # https://github.com/settings/tokens/new
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          event-type: fail-event
-          repository: saisiddulugari/cypress-e2e-test-app
-          client-payload: '{"fail message": "e2e failure"}'
+#       - name: Set commit status
+#         if: ${{ github.event.inputs.commit }}
+#         uses: peter-evans/repository-dispatch@v2
+#         with:
+#           # create personal GitHub token to be able to
+#           # set status in other repositories
+#           # https://github.com/settings/tokens/new
+#           token: ${{ secrets.REPO_ACCESS_TOKEN }}
+#           event-type: fail-event
+#           repository: saisiddulugari/cypress-e2e-test-app
+#           client-payload: '{"fail message": "e2e failure"}'
