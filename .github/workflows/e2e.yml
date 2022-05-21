@@ -31,10 +31,7 @@ jobs:
         if: ${{ steps.cypress.outcome }}
         uses: peter-evans/repository-dispatch@v2
         with:
-          # create personal GitHub token to be able to
-          # set status in other repositories
-          # https://github.com/settings/tokens/new
-          token: ${{secrets.REPO_ACCESS_TOKEN}}
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: saisiddulugari/cypress-e2e-test-app
           event-type: report-back
           # state can be success, error, failure, or pending
