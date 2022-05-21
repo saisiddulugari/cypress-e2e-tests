@@ -40,7 +40,7 @@ jobs:
           # state can be success, error, failure, or pending
           # let's grab it from the Cypress step outcomes
           # https://github.com/cypress-io/github-action#outputs
-          client-payload: '{"outcome": "${{ steps.cypress.outcome }"}}'
+          client-payload: '{"outcome": "${{ steps.cypress.outcome }}"}'
 
 #   show-event:
 #     runs-on: ubuntu-20.04
