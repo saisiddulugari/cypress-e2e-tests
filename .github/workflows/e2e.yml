@@ -28,7 +28,7 @@ jobs:
           config: baseUrl=${{ github.event.client_payload.sai }}
           
       - name: Set commit status
-        if: ${{ github.event.inputs.commit }}
+        if: ${{ steps.cypress.outcome }}
         uses: peter-evans/repository-dispatch@v2
         with:
           # create personal GitHub token to be able to
