@@ -40,6 +40,7 @@ jobs:
 #           client-payload: '{"outcome": "${{ steps.cypress.outcome }}"}'
 
       - name: Set commit status to other repo
+        if: ${{ github.event.client_payload.sha }}
         uses: Sibz/github-status-action@v1
         with:
           # create personal GitHub token to be able to
@@ -54,6 +55,7 @@ jobs:
           state: ${{ steps.cypress.outcome }}
           owner: 'saisiddulugari'
           repository: 'cypress-e2e-test-app'
+          sha: ${{ github.event.client_payload.sha }}
 
 #   show-event:
 #     runs-on: ubuntu-20.04
