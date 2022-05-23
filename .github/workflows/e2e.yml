@@ -45,7 +45,7 @@ jobs:
           # create personal GitHub token to be able to
           # set status in other repositories
           # https://github.com/settings/tokens/new
-          authToken: ${{secrets.REPO_ACCESS_TOKEN}}
+          authToken: ${{ secrets.REPO_ACCESS_TOKEN }}
           context: 'E2E tests'
           description: 'Cypress ran the tests'
           # state can be success, error, failure, or pending
@@ -54,7 +54,6 @@ jobs:
           state: ${{ steps.cypress.outcome }}
           owner: 'saisiddulugari'
           repository: 'cypress-e2e-test-app'
-          sha: ${{github.event.inputs.commit}}
 
 #   show-event:
 #     runs-on: ubuntu-20.04
