@@ -31,7 +31,9 @@ jobs:
         # commit status in the next step, both in case of success and failure
         continue-on-error: true
         with:
-          config: baseUrl=${{ github.event.client_payload.sai }},env=${{ grepTags="visible" }}
+          config: baseUrl=${{ github.event.client_payload.sai }}
+          env: grepTags=visible
+
           
 #       - name: Set commit status
 #         if: ${{ steps.cypress.outcome }}
