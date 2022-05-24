@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-it('works', () => {
+it('works',{ tags: '@visible'}, () => {
   cy.visit('/')
   // application starts with 3 todos
   cy.get('.todo').should('have.length', 3)
