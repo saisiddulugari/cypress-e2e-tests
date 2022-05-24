@@ -18,40 +18,20 @@ jobs:
           # just perform install
           runTests: false
           
-  tag-visible:
-    runs-on: ubuntu-20.04
-    needs: myEvent
-    steps:
-      - name: Checkout 🛎
-        uses: actions/checkout@v2
-
-      # https://github.com/cypress-io/github-action
-      - name: Run tests 🧪
-        uses: cypress-io/github-action@v2
-        with:
-          start: npm run dev
-          wait-on: ${{ github.event.client_payload.sai }}
-          env: grepTags=@visible
-          group: '2 - @visible'
-          tag: tags
-        env:
-          # pass the Dashboard record key as an environment variable
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
   
       # https://github.com/cypress-io/github-action
       # Installs and caches dependencies, runs all Cypress tests
-#       - name: Cypress run
-#         uses: cypress-io/github-action@v2
-#         # let's give this action an ID so we can refer
-#         # to its output values later
-#         id: cypress
-#         # Continue the build in case of an error, as we need to set the
-#         # commit status in the next step, both in case of success and failure
-#         continue-on-error: true
-#         with:
-#           # we want to test the URL passed by Netlify
-#           config: baseUrl=${{ github.event.client_payload.sai }}
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        # let's give this action an ID so we can refer
+        # to its output values later
+        id: cypress
+        # Continue the build in case of an error, as we need to set the
+        # commit status in the next step, both in case of success and failure
+        continue-on-error: true
+        with:
+          config: baseUrl=${{ github.event.client_payload.sai }},env=${{ grepTags='@visible' }}
           
 #       - name: Set commit status
 #         if: ${{ steps.cypress.outcome }}
