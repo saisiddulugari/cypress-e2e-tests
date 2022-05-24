@@ -12,13 +12,6 @@ jobs:
       
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install dependencies 📦
-        uses: cypress-io/github-action@v2
-        with:
-          # just perform install
-          runTests: false
-          
-
   
       # https://github.com/cypress-io/github-action
       # Installs and caches dependencies, runs all Cypress tests
