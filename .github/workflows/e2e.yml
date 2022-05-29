@@ -1,14 +1,14 @@
 name: Repository Dispatch
 on:
   repository_dispatch:
-    types: [my-event]
+    types: [trigger-tests]
 jobs:
   myEvent:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: echo ${{ github.event.client_payload.sha }}
-      - run: echo ${{ github.event.client_payload.sai }}
+      - run: echo ${{ github.event.client_payload.preview_url }}
       - run: echo ${{ github.event.client_payload.tags }}
 
       - name: Checkout
@@ -18,18 +18,16 @@ jobs:
       # Installs and caches dependencies, runs all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v2
-        # let's give this action an ID so we can refer
-        # to its output values later
         id: cypress
         # Continue the build in case of an error, as we need to set the
         # commit status in the next step, both in case of success and failure
         continue-on-error: true
         with:
-          config: baseUrl=${{ github.event.client_payload.sai }}
+          config: baseUrl=${{ github.event.client_payload.preview_url }}
           env: grepTags=${{ github.event.client_payload.tags }}
 
 
-      - name: Set commit status to other repo
+      - name: Set commit status to calling repo
         if: ${{ github.event.client_payload.sha }}
         uses: Sibz/github-status-action@v1
         with:
